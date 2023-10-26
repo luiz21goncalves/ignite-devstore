@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { ReactNode } from 'react'
 
 import './globals.css'
 
@@ -9,14 +10,16 @@ export const metadata: Metadata = {
   title: 'devstore',
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+type RootLayoutProps = {
+  children: ReactNode
+}
+
+export default function RootLayout(props: RootLayoutProps) {
+  const { children } = props
+
   return (
     <html className={inter.variable} lang="pt-br">
-      <body>{children}</body>
+      <body className="bg-zinc-950 text-zinc-50 antialiased">{children}</body>
     </html>
   )
 }
