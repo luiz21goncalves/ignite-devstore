@@ -10,7 +10,7 @@ export default function StoreLayout(props: StoreLayoutProps) {
   const { children } = props
 
   return (
-    <div className="mix-h-screen mix-w-[1600px] mx-auto grid w-full grid-rows-app gap-5 p-8">
+    <div className="mix-h-screen mx-auto grid w-full max-w-[1600px] grid-rows-app gap-5 p-8">
       <Header />
       {children}
     </div>
