@@ -1,8 +1,8 @@
-export function formatToBrlCurrency(price: number) {
+export function formatToBrlCurrency(price: number, fractionDigits = 0) {
   return new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
+    minimumFractionDigits: fractionDigits,
+    maximumFractionDigits: fractionDigits,
   }).format(price)
 }
