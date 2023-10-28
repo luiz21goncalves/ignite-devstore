@@ -1,5 +1,7 @@
 import { PRODUCTS } from '@/constants/products'
 
 export async function GET() {
-  return Response.json({ products: PRODUCTS })
+  await new Promise((resolve) => setTimeout(resolve, 1000))
+
+  return Response.json(PRODUCTS)
 }
