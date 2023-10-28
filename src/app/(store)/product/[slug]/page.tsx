@@ -5,7 +5,9 @@ import { api } from '@/data/api'
 import { Product } from '@/data/types/product'
 import { formatToBrlCurrency } from '@/utils/formatToBrlCurrency'
 
-type ProductPageProps = { params: { slug: string } }
+type Params = { slug: string }
+
+type ProductPageProps = { params: Params }
 
 async function getProduct(slug: string): Promise<Product | null> {
   const response = await api(`/products/${slug}`, {
@@ -27,6 +29,18 @@ export async function generateMetadata({
   return {
     title: product?.title,
   }
+}
+
+export async function generateStaticParams(): Promise<Params[]> {
+  const response = await api('/products/featured')
+
+  const products: Product[] = await response.json()
+
+  const params = products.map((product) => {
+    return { slug: product.slug }
+  })
+
+  return params
 }
 
 export default async function ProductPage(props: ProductPageProps) {
