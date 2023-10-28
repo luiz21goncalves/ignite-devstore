@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 export default function ProductPage() {
   return (
-    <div className="relative grid max-h-[860px] grid-cols-3">
+    <div className="relative grid max-h-store grid-cols-3">
       <div className="col-span-2 overflow-hidden">
         <Image
           src="/camiseta-dowhile-2022.png"
