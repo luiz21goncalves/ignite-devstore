@@ -1,7 +1,7 @@
-import data from '../data.json'
+import { PRODUCTS } from '@/constants/products'
 
 export async function GET() {
-  const featuredProducts = data.products.filter((product) => product.featured)
+  const featuredProducts = PRODUCTS.filter((product) => product.featured)
 
   return Response.json({ products: featuredProducts })
 }

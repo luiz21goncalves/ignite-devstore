@@ -1,5 +1,5 @@
-import data from './data.json'
+import { PRODUCTS } from '@/constants/products'
 
 export async function GET() {
-  return Response.json(data)
+  return Response.json({ products: PRODUCTS })
 }
