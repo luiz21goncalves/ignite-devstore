@@ -1,12 +1,11 @@
+import { Metadata } from 'next'
 import Image from 'next/image'
 
 import { api } from '@/data/api'
 import { Product } from '@/data/types/product'
 import { formatToBrlCurrency } from '@/utils/formatToBrlCurrency'
 
-type ProductPageProps = {
-  params: { slug: string }
-}
+type ProductPageProps = { params: { slug: string } }
 
 async function getProduct(slug: string): Promise<Product | null> {
   const response = await api(`/products/${slug}`, {
@@ -18,6 +17,16 @@ async function getProduct(slug: string): Promise<Product | null> {
   const product = response.json()
 
   return product
+}
+
+export async function generateMetadata({
+  params,
+}: ProductPageProps): Promise<Metadata> {
+  const product = await getProduct(params.slug)
+
+  return {
+    title: product?.title,
+  }
 }
 
 export default async function ProductPage(props: ProductPageProps) {
