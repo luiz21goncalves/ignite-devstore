@@ -7,8 +7,6 @@ type Context = {
 }
 
 export async function GET(_request: Request, context: Context) {
-  await new Promise((resolve) => setTimeout(resolve, 1000))
-
   const slug = z.string().parse(context.params.slug)
 
   const product = PRODUCTS.find((product) => product.slug === slug)
