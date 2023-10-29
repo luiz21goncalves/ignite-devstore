@@ -1,18 +1,47 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
 
-import { PRODUCTS } from '@/constants/products'
+import { api } from '@/data/api'
+import { Product } from '@/data/types/product'
 import { formatToBrlCurrency } from '@/utils/formatToBrlCurrency'
 
-export default async function SearchProducts() {
+async function searchProducts(query: string): Promise<Product[]> {
+  const response = await api(`/products/search?q=${query}`, {
+    next: {
+      revalidate: 60 * 60, // 1 hour
+    },
+  })
+
+  const products = await response.json()
+
+  return products
+}
+
+type SearchProductsProps = {
+  searchParams?: {
+    q: string
+  }
+}
+
+export default async function SearchProducts(props: SearchProductsProps) {
+  const { searchParams } = props
+  const query = searchParams?.q
+
+  if (!query) {
+    redirect('/')
+  }
+
+  const products = await searchProducts(query)
+
   return (
     <div className="flex flex-col gap-4">
       <p className="text-sm">
-        Resultado para: <span className="font-semibold">moleton</span>
+        Resultado para: <span className="font-semibold">{query}</span>
       </p>
 
       <div className="grid grid-cols-3 gap-6">
-        {PRODUCTS.map((product) => {
+        {products.map((product) => {
           return (
             <Link
               key={product.id}
