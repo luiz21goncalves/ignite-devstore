@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@rocketseat/eslint-config": "2.1.0",
+    "@t3-oss/env-nextjs": "0.7.1",
     "@types/node": "20.8.9",
     "@types/react": "18.2.33",
     "@types/react-dom": "18.2.14",
