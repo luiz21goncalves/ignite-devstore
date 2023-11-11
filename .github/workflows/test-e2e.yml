@@ -9,32 +9,28 @@ jobs:
       - name: checkout
         uses: actions/checkout@v4
 
-      - name: install node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-
       - name: pnstall pnpm
         uses: pnpm/action-setup@v2
         with:
           version: 8
-          run_install: false
 
-      - name: get pnpm store directory
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-      - name: setup pnpm cache
+      - name: cache node_modules
         uses: actions/cache@v3
+        id: pnpm-cache
         with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          path: "**/node_modules"
+          key: ${{ runner.os }}-node-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+            ${{ runner.os }}-node-
 
-      - name: install dependencies
-        run: pnpm install
+      - name: install node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+
+        if: steps.pnpm-cache.outputs.cache-hit != 'true'
+      - run: pnpm install --prefer-offline --frozen-lockfile
 
       - name: cypress run
         uses: cypress-io/github-action@v6
