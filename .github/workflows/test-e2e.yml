@@ -12,7 +12,7 @@ jobs:
       - name: install node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: 18
 
       - name: pnstall pnpm
         uses: pnpm/action-setup@v2
@@ -42,5 +42,5 @@ jobs:
           APP_URL: "http://localhost:3000"
           NEXT_PUBLIC_API_BASE_URL: "http://localhost:3000"
         with:
-          build: pnpm run build
-          start: pnpm start
+          build: npm run build
+          start: npm start
